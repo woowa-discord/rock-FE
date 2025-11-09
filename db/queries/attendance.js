@@ -18,4 +18,6 @@ export const attendanceQueries = {
   ON CONFLICT (user_id) DO UPDATE 
   SET total_attendance = states.total_attendance + 1,
   updated_at = NOW()`,
+
+  getStreakDays: `SELECT streak_days FROM states WHERE user_id=$1`,
 };

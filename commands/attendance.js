@@ -30,7 +30,16 @@ export default {
         // 새 기록인 경우
         await pool.query(attendanceQueries.updateStats, [userId]);
 
-        await interaction.reply(`출석이 완료 됐습니다요!`);
+        // 연속 출석일 수 조회
+        const stats = await pool.query(attendanceQueries.getStreakDays, [
+          userId,
+        ]);
+        const streakCount = stats.rows[0]?.streak_days || 1;
+
+        await interaction.reply(
+          `<@${userId}> 마님, 출석이 완료 됐습니다요!\n\n` +
+            `연속 출석 ${streakCount}일 째입니다요!`
+        );
       } else {
         await interaction.reply(`마님, 오늘 건 이미 찍었슈!`);
       }
