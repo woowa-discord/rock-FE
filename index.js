@@ -26,6 +26,7 @@ const client = new Client({
 });
 
 //client(봇)에게 슬래쉬 명령어들을 저장할 수 있는 Collection 달아주기
+// Collection은 discordJS에서 선언된 타입 -> documentation 확인해보기
 client.commands = new Collection();
 
 //봇 실행시 처음 한 번만 실행하는 코드
