@@ -1,6 +1,6 @@
-// commands/출석.js
 import { SlashCommandBuilder } from 'discord.js';
 import pool from '../db/database.js';
+import { attendanceQueries } from '../db/queries/attendance.js';
 
 export default {
   data: new SlashCommandBuilder()
@@ -13,35 +13,20 @@ export default {
 
     try {
       // 사용자 등록
-      await pool.query(
-        `INSERT INTO users (user_id, username)
-         VALUES ($1, $2)
-         ON CONFLICT (user_id) DO UPDATE SET username = $2`,
-        [userId, username]
-      );
+      await pool.query(attendanceQueries.registerUser, [userId, username]);
 
       // 출석 체크
       const today = new Date();
       const isMorning = today.getHours() < 9;
 
-      const result = await pool.query(
-        `INSERT INTO attendance (user_id, attendance_date, attendance_time, is_morning)
-         VALUES ($1, CURRENT_DATE, CURRENT_TIME, $2)
-         ON CONFLICT (user_id, attendance_date) DO NOTHING
-         RETURNING attendance_id`,
-        [userId, isMorning]
-      );
+      const result = await pool.query(attendanceQueries.registerAttendance, [
+        userId,
+        isMorning,
+      ]);
 
       if (result.rows.length > 0) {
         // 통계 업데이트
-        await pool.query(
-          `INSERT INTO states (user_id, total_attendance)
-           VALUES ($1, 1)
-           ON CONFLICT (user_id) DO UPDATE 
-           SET total_attendance = states.total_attendance + 1,
-               updated_at = NOW()`,
-          [userId]
-        );
+        await pool.query(attendanceQueries.updateStats, [userId]);
 
         await interaction.reply(`출석 완료!`);
       } else {
