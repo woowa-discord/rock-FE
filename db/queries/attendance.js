@@ -21,4 +21,9 @@ export const attendanceQueries = {
 
   // 연속 출석일 수 구하기
   getStreakDays: `SELECT streak_days FROM states WHERE user_id=$1`,
+
+  // 이번달 통계
+  attendanceState: `SELECT user_id, total_attendance, streak_days, max_streak
+  FROM states
+  WHERE user_id = $1`,
 };
