@@ -16,12 +16,16 @@ export default {
       await pool.query(attendanceQueries.registerUser, [userId, username]);
 
       // 출석 체크
-      const today = new Date();
+      const now = new Date();
+      const koreaTime = new Date(now.getTime() + 9 * 60 * 60 * 1000);
+      const todayKST = koreaTime.toISOString().split('T')[0];
+
       // 9시 이전 출석시 아침 출석으로 인정
-      const isMorning = today.getHours() <= 6 || today.getHours() < 9;
+      const isMorning = koreaTime.getHours() >= 6 || koreaTime.getHours() < 9;
 
       const result = await pool.query(attendanceQueries.registerAttendance, [
         userId,
+        todayKST,
         isMorning,
       ]);
 
@@ -36,8 +40,10 @@ export default {
         ]);
         const streakCount = stats.rows[0]?.streak_days || 1;
 
+        const morning = isMorning ? '아침 출석에 성공했습니다요!🎉' : '';
+
         await interaction.reply(
-          `<@${userId}> 마님, 출석이 완료 됐습니다요!\n\n` +
+          `<@${userId}> 마님, 출석이 완료 됐습니다요! ${morning}\n\n` +
             `연속 출석 ${streakCount}일 째입니다요!`
         );
       } else {

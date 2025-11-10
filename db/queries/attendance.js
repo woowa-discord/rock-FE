@@ -8,7 +8,7 @@ export const attendanceQueries = {
 
   // 출석 등록
   registerAttendance: `INSERT INTO attendance (user_id, attendance_date, attendance_time, is_morning)
-  VALUES ($1, CURRENT_DATE, CURRENT_TIME, $2)
+  VALUES ($1, $2, CURRENT_TIME, $3)
   ON CONFLICT (user_id, attendance_date) DO NOTHING
   RETURNING attendance_id`,
 
@@ -19,5 +19,6 @@ export const attendanceQueries = {
   SET total_attendance = states.total_attendance + 1,
   updated_at = NOW()`,
 
+  // 연속 출석일 수 구하기
   getStreakDays: `SELECT streak_days FROM states WHERE user_id=$1`,
 };
