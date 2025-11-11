@@ -2,25 +2,30 @@ import { Events } from "discord.js";
 import { CHANNEL_ENTER_MSG, CHANNEL_EXIT_MSG } from "../constants/messages.js";
 
 const studyChannelId = process.env.STUDY_TRACK_VOICE_CHANNEL_ID;
+const User = {
+  userDisplayName: "",
+  userId: "",
+};
 
 export default {
   name: Events.VoiceStateUpdate,
   //client는 voiceStateUpdate를 일으킨 member의 VoiceState를 반환
   execute(oldState, newState) {
-    const msg = getMessage(newState);
+    User.userDisplayName = newState.member.user.displayName; //사용자 별명
+    User.userId = newState.member.user.id; //사용자 id 번호
+    // newState.member.user.username = 사용자 이름 (=id)
+
+    const currentChannelId = newState.channelId;
+    const msg = getMessage(currentChannelId);
     sendMessage(newState, msg);
   },
 };
 
-const getMessage = (newState) => {
-  const userDisplayName = newState.member.user.displayName; //사용자 별명
-  // newState.member.user.username = 사용자 이름 (=id)
-  // newState.member.user.id = 사용자 id 번호
-
-  if (newState.channelId === null) {
-    return userDisplayName + CHANNEL_EXIT_MSG;
-  } else if (newState.channelId === studyChannelId) {
-    return userDisplayName + CHANNEL_ENTER_MSG;
+const getMessage = (currentChannelId) => {
+  if (currentChannelId === null) {
+    return User.userDisplayName + CHANNEL_EXIT_MSG;
+  } else if (currentChannelId === studyChannelId) {
+    return User.userDisplayName + CHANNEL_ENTER_MSG;
   }
 };
 
