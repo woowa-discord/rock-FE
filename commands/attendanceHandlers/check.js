@@ -1,3 +1,4 @@
+import { ATTENDANCE } from '../../constants/messages.js';
 import pool from '../../db/database.js';
 import { ATTENDANCE_QUERIES } from '../../db/queries/attendance.js';
 import {
@@ -32,18 +33,18 @@ export async function checkAttendance(interaction) {
       await pool.query(ATTENDANCE_QUERIES.UPDATE_STATS, [userId, yesterday]); // 통계 업데이트
 
       const streakCount = await getStreakDays(userId);
-      const morning = isMorning ? '아침 출석에 성공했습니다요!🎉' : '';
+      const morning = isMorning ? ATTENDANCE.MORNING_ATTEND : '';
 
       await interaction.reply(
         `<@${userId}> 마님, 출석이 완료 됐습니다요! ${morning}\n\n` +
           `연속 출석 ${streakCount}일 째입니다요!`
       );
     } else {
-      await interaction.reply(`마님, 오늘 건 이미 찍었슈!`);
+      await interaction.reply(ATTENDANCE.ALREADY_CHECKED);
     }
   } catch (error) {
     console.error('출석 오류', error);
-    await interaction.reply('이런, 뭔가 꼬였는갑네… 출석이 안 됐습니다요!');
+    await interaction.reply(ATTENDANCE.ERROR_ATTEND);
   }
 }
 

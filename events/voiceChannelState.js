@@ -1,10 +1,10 @@
-import { Events } from "discord.js";
-import { CHANNEL_ENTER_MSG, CHANNEL_EXIT_MSG } from "../constants/messages.js";
-import { User } from "./UserClass/User.js";
+import { Events } from 'discord.js';
+import { User } from './UserClass/User.js';
 import {
   StudyTimeCountError,
   SendingChannelMessageFailError,
-} from "../error/Errors.js";
+} from '../error/Errors.js';
+import { CHANNEL } from '../constants/messages.js';
 
 const studyChannelId = process.env.STUDY_TRACK_VOICE_CHANNEL_ID;
 
@@ -59,12 +59,12 @@ const checkStudy = (client, user) => {
   if (curChannelId === studyChannelId) {
     //입장
     user.startTimer();
-    const msg = user.makeMessage(CHANNEL_ENTER_MSG);
+    const msg = user.makeMessage(CHANNEL.ENTER_MSG);
     sendMessage(curState, msg);
   } else {
     //퇴장
     user.endTimer();
-    const msg = user.makeMessage(CHANNEL_EXIT_MSG);
+    const msg = user.makeMessage(CHANNEL.EXIT_MSG);
     sendMessage(curState, msg);
   }
   client.studyUsers.set(user.userId, user); //client에 해당 사용자의 상태 업데이트

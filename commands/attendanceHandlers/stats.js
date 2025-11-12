@@ -1,3 +1,4 @@
+import { ATTENDANCE } from '../../constants/messages.js';
 import pool from '../../db/database.js';
 import { ATTENDANCE_QUERIES } from '../../db/queries/attendance.js';
 
@@ -8,7 +9,7 @@ export async function getAttendanceStats(interaction) {
     ]);
 
     if (result.rows.length === 0) {
-      return interaction.editReply('출석 기록이 없습니다요!');
+      return interaction.editReply(ATTENDANCE.NO_RECORD);
     }
 
     const state = result.rows[0];
@@ -20,8 +21,6 @@ export async function getAttendanceStats(interaction) {
     );
   } catch (error) {
     console.error('출석통계 오류', error);
-    return interaction.reply(
-      '이런, 뭔가 꼬였는갑네… 통계를 못 불러오겠는디요?'
-    );
+    return interaction.reply(ATTENDANCE.ERROR_ATTENDSTATS);
   }
 }
