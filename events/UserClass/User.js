@@ -1,4 +1,5 @@
 export class User {
+  #newState;
   #userId;
   #userDisplayName;
   #isStudying;
@@ -7,9 +8,10 @@ export class User {
   #studyTimeEnd;
   #studyTime;
   #totalStudyTime;
-  constructor(data) {
-    this.#userDisplayName = data.userDisplayName;
-    this.#userId = data.userId;
+  constructor(newState) {
+    this.#newState = newState;
+    this.#userDisplayName = newState.member.user.displayName;
+    this.#userId = newState.member.user.id;
     this.#isStudying = true;
     this.#yymmdd = this.#getDate();
     this.#studyTimeStart = 0;
@@ -26,21 +28,37 @@ export class User {
     return `${year}${month}${date}`;
   }
 
+  get userId() {
+    return this.#userId;
+  }
+
+  get curState() {
+    return this.#newState;
+  }
+
+  makeMessage(msg) {
+    return this.#userDisplayName + msg;
+  }
+
   startTimer() {
     this.#studyTimeStart = Date.now();
+    this.#isStudying = true;
   }
 
   endTimer() {
     this.#studyTimeEnd = Date.now();
+    this.#isStudying = false;
+    this.#saveTime();
+    this.#sendDM();
   }
 
-  saveTime() {
+  #saveTime() {
     this.#studyTime = this.#calculateStudyTime();
     this.#totalStudyTime += this.#studyTime;
   }
 
-  sendDM(state) {
-    const membersMap = state.guild.members.cache;
+  #sendDM() {
+    const membersMap = this.#newState.guild.members.cache;
     const member = membersMap.get(this.#userId);
     member.send(
       `${this.#userDisplayName} 마님 방금 ${
