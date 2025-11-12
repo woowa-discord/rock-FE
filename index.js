@@ -25,6 +25,7 @@ const client = new Client({
 });
 
 //client(봇)에게 슬래쉬 명령어들을 저장할 수 있는 Collection 달아주기
+// Collection은 discordJS에서 선언된 타입 -> documentation 확인해보기
 client.commands = new Collection();
 
 //__dirname은 CJS에서는 지원했지만 esm에서는 하지 않기 때문에 별도로 선언해줘야 함
