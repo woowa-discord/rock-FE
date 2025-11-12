@@ -14,31 +14,23 @@ export async function checkAttendance(interaction) {
   const username = interaction.user.username;
 
   try {
-    await pool.query(ATTENDANCE_QUERIES.REGISTER_USER, [userId, username]);
+    await pool.query(ATTENDANCE_QUERIES.REGISTER_USER, [userId, username]); // 유저 등록
 
-    const koreaTime = getKoreanTime();
-    const today = formatKSTDate(koreaTime);
-    const currentTime = formatKSTTime(koreaTime);
-    const yesterday = getYesterdayKST();
-    const isMorning = isMorningTime();
-
+    const timeInfo = getTimeInfo(); // 한국 시간 가져오기
     const result = await pool.query(ATTENDANCE_QUERIES.REGISTER_ATTENDANCE, [
       userId,
-      today,
-      currentTime,
-      isMorning,
-    ]); // 출석 데이터 id return 됨
+      timeInfo.today,
+      timeInfo.currentTime,
+      timeInfo.isMorning,
+    ]); // 한국 시간으로 출석 등록
 
     if (result.rows.length > 0) {
-      await pool.query(ATTENDANCE_QUERIES.UPDATE_STATS, [userId, yesterday]); // 통계 업데이트
-
-      const streakCount = await getStreakDays(userId);
-      const morning = isMorning ? ATTENDANCE.MORNING_ATTEND : '';
-
-      await interaction.reply(
-        `<@${userId}> 마님, 출석이 완료 됐습니다요! ${morning}\n\n` +
-          `연속 출석 ${streakCount}일 째입니다요!`
-      );
+      const message = await processAttendance(
+        userId,
+        timeInfo.yesterday,
+        timeInfo.isMorning
+      ); // 통계 업데이트, message 생성
+      await interaction.reply(message);
     } else {
       await interaction.reply(ATTENDANCE.ALREADY_CHECKED);
     }
@@ -48,6 +40,31 @@ export async function checkAttendance(interaction) {
   }
 }
 
+// 시간 변환
+function getTimeInfo() {
+  const koreanTime = getKoreanTime();
+  return {
+    today: formatKSTDate(koreanTime),
+    currentTime: formatKSTTime(koreanTime),
+    yesterday: getYesterdayKST(),
+    isMorning: isMorningTime(),
+  };
+}
+
+// 통계 업데이트하고, message 생성
+async function processAttendance(userId, yesterday, isMorning) {
+  await pool.query(ATTENDANCE_QUERIES.UPDATE_STATS, [userId, yesterday]);
+
+  const streakCount = await getStreakDays(userId);
+  const morning = isMorning ? ATTENDANCE.MORNING_ATTEND : '';
+
+  return (
+    `<@${userId}> 마님, 출석이 완료 됐습니다요! ${morning}\n\n` +
+    `연속 출석 ${streakCount}일 째입니다요!`
+  );
+}
+
+// 연속 출석일 수 가져오기
 async function getStreakDays(userId) {
   const stats = await pool.query(ATTENDANCE_QUERIES.GET_STREAKDAYS, [userId]);
 
