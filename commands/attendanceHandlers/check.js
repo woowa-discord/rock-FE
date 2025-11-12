@@ -16,22 +16,22 @@ export async function checkAttendance(interaction) {
     await pool.query(ATTENDANCE_QUERIES.REGISTER_USER, [userId, username]);
 
     const koreaTime = getKoreanTime();
-    const todayKST = formatKSTDate(koreaTime);
-    const currentTimeKST = formatKSTTime(koreaTime);
-    const yesterdayKST = getYesterdayKST();
+    const today = formatKSTDate(koreaTime);
+    const currentTime = formatKSTTime(koreaTime);
+    const yesterday = getYesterdayKST();
     const isMorning = isMorningTime();
 
     const result = await pool.query(ATTENDANCE_QUERIES.REGISTER_ATTENDANCE, [
       userId,
-      todayKST,
-      currentTimeKST,
+      today,
+      currentTime,
       isMorning,
-    ]);
+    ]); // 출석 데이터 id return 됨
 
     if (result.rows.length > 0) {
-      await pool.query(ATTENDANCE_QUERIES.UPDATE_STATS, [userId, yesterdayKST]);
-      const streakCount = await getStreakDays(userId);
+      await pool.query(ATTENDANCE_QUERIES.UPDATE_STATS, [userId, yesterday]); // 통계 업데이트
 
+      const streakCount = await getStreakDays(userId);
       const morning = isMorning ? '아침 출석에 성공했습니다요!🎉' : '';
 
       await interaction.reply(
@@ -49,5 +49,11 @@ export async function checkAttendance(interaction) {
 
 async function getStreakDays(userId) {
   const stats = await pool.query(ATTENDANCE_QUERIES.GET_STREAKDAYS, [userId]);
-  return stats.rows[0]?.streak_days || 1;
+
+  if (stats.rows[0] && stats.rows[0].streak_days) {
+    return stats.rows[0].streak_days;
+  } else {
+    return 1;
+  }
+  //streak_days가 있으면 반환, 없으면 1
 }

@@ -3,9 +3,6 @@ import { ATTENDANCE_QUERIES } from '../../db/queries/attendance.js';
 
 export async function getAttendanceStats(interaction) {
   try {
-    // 먼저 응답을 defer 처리 (3초 제한 회피)
-    await interaction.deferReply();
-
     const result = await pool.query(ATTENDANCE_QUERIES.ATTENDANCE_STATS, [
       interaction.user.id,
     ]);
@@ -22,14 +19,9 @@ export async function getAttendanceStats(interaction) {
         `최대 연속 ${state.max_streak}일 출석`
     );
   } catch (error) {
-    console.error('출석통계 오류:', error);
-
-    // 이미 defer했는지 확인
-    if (interaction.deferred || interaction.replied) {
-      return interaction.editReply(
-        '출석 통계를 불러오는 중 오류가 발생했습니다.'
-      );
-    }
-    return interaction.reply('출석 통계를 불러오는 중 오류가 발생했습니다.');
+    console.error('출석통계 오류', error);
+    return interaction.reply(
+      '이런, 뭔가 꼬였는갑네… 통계를 못 불러오겠는디요?'
+    );
   }
 }

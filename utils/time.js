@@ -9,6 +9,8 @@ export function getKoreanTime() {
   return koreaTime;
 }
 
+// 형식에 맞춰서
+
 export function formatKSTDate(date) {
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -24,8 +26,8 @@ export function formatKSTTime(date) {
 }
 
 export function getYesterdayKST() {
-  const koreaTime = getKoreanTime();
-  const yesterday = new Date(koreaTime);
+  const koreanTime = getKoreanTime();
+  const yesterday = new Date(koreanTime);
   yesterday.setDate(yesterday.getDate() - 1);
   return formatKSTDate(yesterday);
 }
@@ -34,4 +36,5 @@ export function isMorningTime() {
   const koreaTime = getKoreanTime();
   const hour = koreaTime.getHours();
   return hour >= 6 && hour < 9;
+  //boolean으로
 }
