@@ -1,24 +1,22 @@
+// commands/attendanceHandlers/stats.js
 import { ATTENDANCE } from '../../constants/messages.js';
-import pool from '../../db/database.js';
-import { ATTENDANCE_QUERIES } from '../../db/queries/attendance.js';
+import { getStats } from './attendanceData.js';
 
 export async function getAttendanceStats(interaction) {
   try {
-    const result = await pool.query(ATTENDANCE_QUERIES.ATTENDANCE_STATS, [
-      interaction.user.id,
-    ]);
+    const stats = await getStats(interaction.user.id);
 
-    if (result.rows.length === 0) {
-      return interaction.editReply(ATTENDANCE.NO_RECORD);
+    if (!stats) {
+      return interaction.reply(ATTENDANCE.NO_RECORD);
     }
 
-    const state = result.rows[0];
-    return interaction.editReply(
+    const message =
       `## 출석 통계\n` +
-        `총 출석 : ${state.total_attendance}회 \n` +
-        `현재 연속 ${state.streak_days}회 출석\n` +
-        `최대 연속 ${state.max_streak}일 출석`
-    );
+      `총 출석 : ${stats.total_attendance}회 \n` +
+      `현재 연속 ${stats.streak_days}회 출석\n` +
+      `최대 연속 ${stats.max_streak}일 출석`;
+
+    return interaction.reply(message);
   } catch (error) {
     console.error('출석통계 오류', error);
     return interaction.reply(ATTENDANCE.ERROR_ATTENDSTATS);

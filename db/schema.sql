@@ -26,7 +26,7 @@ CREATE TABLE session (
     start_time TIMESTAMP NOT NULL,
     end_time TIMESTAMP NULL,
     duration_minutes INTEGER NULL,
-    is_valid BOOLEAN DEFAULT true,
+    total_study_time INTEGER,
     
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
