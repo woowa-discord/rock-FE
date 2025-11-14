@@ -22,3 +22,12 @@ export class SendingChannelMessageFailError extends BotError {
     );
   }
 }
+
+export class SaveStudyTimeToDBFailError extends BotError {
+  constructor(state, user_id, error) {
+    const membersMap = state.guild.members.cache;
+    const member = membersMap.get(user_id);
+    member.send(`${ERROR_MESSAGES.ERROR_STUDY_TIME_DBSAVE_FAIL}`);
+    console.log(`DB에 공부시간 저장 실패\n${error.message}`);
+  }
+}

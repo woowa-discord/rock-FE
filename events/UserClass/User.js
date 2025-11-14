@@ -80,6 +80,7 @@ export class User {
       const startTime = new Date(this.#studyTimeStart);
       const endTime = new Date(this.#studyTimeEnd);
       saveStudyTimeToDB(
+        this.#newState,
         this.#userId,
         this.#date,
         startTime,
