@@ -1,7 +1,7 @@
-import fs from "fs"; //events 폴더나 commands 폴더를 fs로 읽어와야 봇 실행 시 리스너 등록 가능
-import path from "path"; //폴더나 파일 경로가 있어야 가져오기 가능
-import { pathToFileURL } from "url";
-import "dotenv/config";
+import fs from 'fs'; //events 폴더나 commands 폴더를 fs로 읽어와야 봇 실행 시 리스너 등록 가능
+import path from 'path'; //폴더나 파일 경로가 있어야 가져오기 가능
+import { pathToFileURL } from 'url';
+import 'dotenv/config';
 import {
   Client,
   Events,
@@ -9,8 +9,7 @@ import {
   REST,
   Routes,
   Collection,
-} from "discord.js";
-import pool from "./db/database.js";
+} from 'discord.js';
 
 const token = process.env.DISCORD_TOKEN;
 const clientId = process.env.CLIENT_ID;
@@ -29,23 +28,13 @@ const client = new Client({
 // Collection은 discordJS에서 선언된 타입 -> documentation 확인해보기
 client.commands = new Collection();
 
-//봇 실행시 처음 한 번만 실행하는 코드
-client.once(Events.ClientReady, async (readyClient) => {
-  try {
-    const result = await pool.query("SELECT current_database()");
-    console.log("DB 연결 성공", result.rows[0].current_database);
-  } catch (error) {
-    console.error("DB 연결 실패", error);
-  }
-});
-
 //__dirname은 CJS에서는 지원했지만 esm에서는 하지 않기 때문에 별도로 선언해줘야 함
 const __dirname = import.meta.dirname;
 //commands 파일경로
-const commandsPath = path.join(__dirname, "commands");
+const commandsPath = path.join(__dirname, 'commands');
 //events 파일 내부에 .js로 끝나는 파일 전부 읽어서 저장
 const commandFilesDir = await fs.promises.readdir(commandsPath);
-const commandFiles = commandFilesDir.filter((file) => file.endsWith(".js"));
+const commandFiles = commandFilesDir.filter((file) => file.endsWith('.js'));
 
 const commands = [];
 
@@ -56,7 +45,7 @@ for (const file of commandFiles) {
 
   const commandModule = await import(fileURL);
   const command = commandModule.default;
-  if ("data" in command && "execute" in command) {
+  if ('data' in command && 'execute' in command) {
     commands.push(command.data.toJSON()); // 명령어 배포(등록)
     client.commands.set(command.data.name, command); //execute(실행) 함수 client(봇)에게 저장. 이 부분이 있어야 실행 가능
   } else {
@@ -84,10 +73,10 @@ const rest = new REST().setToken(token);
 
 //이벤트 핸들러 등록
 //events 파일경로
-const eventsPath = path.join(__dirname, "events");
+const eventsPath = path.join(__dirname, 'events');
 //events 파일 내부에 .js로 끝나는 파일 전부 읽어서 저장
 const eventFilesDir = await fs.promises.readdir(eventsPath);
-const eventFiles = eventFilesDir.filter((file) => file.endsWith(".js"));
+const eventFiles = eventFilesDir.filter((file) => file.endsWith('.js'));
 
 /*
 모든 이벤트 파일에 대해 해당 파일의 이벤트 리스너를 봇(client)에 등록하는 과정
