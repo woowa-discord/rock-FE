@@ -1,5 +1,6 @@
 import { StudyTimeCountError, SendingDMFailError } from "../../error/Errors.js";
 import { saveStudyTimeToDB } from "./utils/saveStudyTimeToDB.js";
+import { UNIT } from "../../constants/units.js";
 
 export class User {
   #newState;
@@ -56,13 +57,13 @@ export class User {
   }
 
   startTimer() {
-    this.#studyTimeStart = Date.now();
+    this.#studyTimeStart = Math.floor(Date.now() / UNIT.MS2SEC); //ms -> sec으로 변환해서 저장
     this.#isStudying = true;
   }
 
   endTimer() {
     if (this.#isStudying && this.#studyTimeStart > 0) {
-      this.#studyTimeEnd = Date.now();
+      this.#studyTimeEnd = Math.floor(Date.now() / UNIT.MS2SEC); //ms -> sec으로 변환해서 저장
       this.#isStudying = false;
       this.#saveToDB();
       this.#sendDM();
@@ -91,14 +92,16 @@ export class User {
 
   #sendDM() {
     try {
+      const formattedStudyTime = this.#formatStudyTime(this.#studyTime);
+      const formattedTotalStudyTime = this.#formatStudyTime(
+        this.#totalStudyTime
+      );
       const membersMap = this.#newState.guild.members.cache;
       const member = membersMap.get(this.#userId);
       member.send(
-        `${this.#userDisplayName} 마님 방금 ${
-          this.#studyTime
-        }초 공부하셨습니다요!\n오늘 총 공부 시간은 ${
-          this.#totalStudyTime
-        }초 여유!!`
+        `${
+          this.#userDisplayName
+        } 마님 방금 ${formattedStudyTime} 공부하셨습니다요!\n오늘 총 공부 시간은 ${formattedTotalStudyTime} 여유!!`
       );
     } catch (error) {
       new SendingDMFailError(this.#newState, error);
@@ -107,5 +110,13 @@ export class User {
 
   #calculateStudyTime() {
     return this.#studyTimeEnd - this.#studyTimeStart;
+  }
+
+  //초단위로 측정된 시간을 시분초 단위로 변환
+  #formatStudyTime(time) {
+    const hours = Math.floor(time / UNIT.SEC2HOUR);
+    const minutes = Math.floor((time % UNIT.SEC2HOUR) / UNIT.SEC2MINUTE);
+    const seconds = time % UNIT.SEC2MINUTE;
+    return `${hours}시 ${minutes}분 ${seconds}초`;
   }
 }
