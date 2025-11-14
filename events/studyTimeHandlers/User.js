@@ -71,7 +71,7 @@ export class User {
       this.#sendDM();
       return;
     }
-    throw new StudyTimeCountError();
+    throw new StudyTimeCountError(this.#userDisplayName);
   }
 
   async #saveStudyTime() {
