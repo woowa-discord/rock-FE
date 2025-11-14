@@ -77,6 +77,6 @@ const sendMessage = (curState, msg) => {
     const voiceChannel = channelCollection.get(studyChannelId);
     voiceChannel.send(msg);
   } catch (error) {
-    new SendingChannelMessageFailError(curState, error);
+    throw new SendingChannelMessageFailError(curState, error);
   }
 };
