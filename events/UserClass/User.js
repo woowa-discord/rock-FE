@@ -105,7 +105,7 @@ export class User {
         } 마님 방금 ${formattedStudyTime} 공부하셨습니다요!\n오늘 총 공부 시간은 ${formattedTotalStudyTime} 여유!!`
       );
     } catch (error) {
-      new SendingDMFailError(this.#newState, error);
+      throw new SendingDMFailError(this.#newState, error);
     }
   }
 
