@@ -66,8 +66,8 @@ export class User {
     if (this.#isStudying && this.#studyTimeStart > 0) {
       this.#studyTimeEnd = Date.now(); //ms -> sec으로 변환해서 저장
       this.#isStudying = false;
-      this.#saveStudyTime();
-      await this.#sendDM();
+      await this.#saveStudyTime();
+      this.#sendDM();
       return;
     }
     throw new StudyTimeCountError();
