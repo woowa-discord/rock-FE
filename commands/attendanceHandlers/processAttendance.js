@@ -34,7 +34,7 @@ export async function processAttendance(userId, username) {
 
   // 통계 업데이트
   const streakDays = await updateAttendanceStats(userId, yesterday);
-  ㅎ;
+
   return {
     streakDays,
     isMorning,
