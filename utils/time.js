@@ -45,5 +45,5 @@ export const formatStudyTime = (time) => {
   const hours = Math.floor(time / UNIT.SEC2HOUR);
   const minutes = Math.floor((time % UNIT.SEC2HOUR) / UNIT.SEC2MINUTE);
   const seconds = time % UNIT.SEC2MINUTE;
-  return `${hours}시 ${minutes}분 ${seconds}초`;
+  return `${hours}시간 ${minutes}분 ${seconds}초`;
 };
