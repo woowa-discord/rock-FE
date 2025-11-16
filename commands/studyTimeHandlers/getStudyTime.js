@@ -7,15 +7,17 @@ const todayDate = formatKSTDate(getKoreanTime());
 
 export const getStudyTime = async (interaction, range) => {
   const userDisplayName = interaction.member.displayName;
-  let response = "";
-
   try {
+    let response = "";
+
     if (range === "day") {
       response = await dailyStudyTimeMsg(todayDate, userDisplayName);
     } else if (range === "month") {
       const monthPattern = `${todayDate.substring(0, 7)}%`;
+
       response = await monthlyStudyTimeMsg(monthPattern, userDisplayName);
     }
+
     await interaction.reply(response);
   } catch (error) {
     console.log(error.message);
