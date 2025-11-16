@@ -5,39 +5,41 @@ import { formatStudyTime } from "../../utils/time.js";
 
 const todayDate = formatKSTDate(getKoreanTime());
 
-export const getDailyStudyTime = async (interaction) => {
-  try {
-    const userDisplayName = interaction.member.displayName;
+export const getStudyTime = async (interaction, range) => {
+  const userDisplayName = interaction.member.displayName;
+  let response = "";
 
-    const dailyStudyTime = await getStudyTimeFromDB(
-      STUDY_TIME_QUERIES.FETCH_DAILY_STUDY_TIME,
-      todayDate
-    );
-    const formattedStudyTime = formatStudyTime(dailyStudyTime);
-    const msg = `[${userDisplayName}] 마님의 오늘(${todayDate}) 공부시간은 ${formattedStudyTime} 여유!`;
-    await interaction.reply(msg);
+  try {
+    if (range === "day") {
+      response = await dailyStudyTimeMsg(todayDate, userDisplayName);
+    } else if (range === "month") {
+      const monthPattern = `${todayDate.substring(0, 7)}%`;
+      response = await monthlyStudyTimeMsg(monthPattern, userDisplayName);
+    }
+    await interaction.reply(response);
   } catch (error) {
     console.log(error.message);
   }
 };
 
-export const getMonthlyStudyTime = async (interaction) => {
-  try {
-    const userDisplayName = interaction.member.displayName;
+const dailyStudyTimeMsg = async (date, userDisplayName) => {
+  const dailyStudyTime = await getStudyTimeFromDB(
+    STUDY_TIME_QUERIES.FETCH_DAILY_STUDY_TIME,
+    date
+  );
+  const formattedStudyTime = formatStudyTime(dailyStudyTime);
+  return `[${userDisplayName}] 마님의 오늘(${date}) 공부시간은 ${formattedStudyTime} 여유!`;
+};
 
-    const monthPattern = `${todayDate.substring(0, 7)}%`;
-    const dateOnlyMonth = monthPattern.substring(5, 7);
+const monthlyStudyTimeMsg = async (datePattern, userDisplayName) => {
+  const monthlyStudyTime = await getStudyTimeFromDB(
+    STUDY_TIME_QUERIES.FETCH_MONTHLY_STUDY_TIME,
+    datePattern
+  );
+  const formattedStudyTime = formatStudyTime(monthlyStudyTime);
 
-    const monthlyStudyTime = await getStudyTimeFromDB(
-      STUDY_TIME_QUERIES.FETCH_MONTHLY_STUDY_TIME,
-      monthPattern
-    );
-    const formattedStudyTime = formatStudyTime(monthlyStudyTime);
-    const msg = `[${userDisplayName}] 마님의 이번 달(${dateOnlyMonth}) 공부시간은 ${formattedStudyTime} 여유!`;
-    await interaction.reply(msg);
-  } catch (error) {
-    console.log(error.message);
-  }
+  const dateOnlyMonth = datePattern.substring(5, 7);
+  return `[${userDisplayName}] 마님의 ${dateOnlyMonth}월의 공부시간은 ${formattedStudyTime} 여유!`;
 };
 
 const getStudyTimeFromDB = async (query, date) => {
