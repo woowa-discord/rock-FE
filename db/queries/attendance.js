@@ -1,9 +1,6 @@
 // 출석처리 쿼리
 
 export const ATTENDANCE_QUERIES = {
-  // 채널 등록
-  REGISTER_CHANNEL: ``,
-
   // 사용자 등록
   REGISTER_USER: `INSERT INTO users (user_id, username)
   VALUES ($1, $2)
