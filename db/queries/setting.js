@@ -7,4 +7,8 @@ export const SETTING_QUERY = {
   UPDATE_CHANNEL: `UPDATE settings
     SET attendance_channel_id = $1 
     WHERE guild_id = $2`,
+
+  UPDATE_TIME: `UPDATE settings
+    SET attendance_time = $1
+    WHERE guild_id = $2`,
 };
