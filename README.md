@@ -133,14 +133,13 @@
 
 ## 주요 기능
 
-### 출석 체크
+| 출석 체크                                                                                                                   | 출석 현황                                                                                                                   |
+| --------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| <img src="https://raw.githubusercontent.com/lucykim05/image/main/rock_FE/KakaoTalk_20251117_163654672_01.gif" width="700"/> | <img src="https://raw.githubusercontent.com/lucykim05/image/main/rock_FE/KakaoTalk_20251117_163654672_02.gif" width="300"/> |
 
-<img src = 'https://raw.githubusercontent.com/lucykim05/image/main/rock_FE/attendance_check.gif' />
-<br />
-
-### 출석 현황
-
-### 출석 순위
+| 출석 순위                                                                                                                | 출석 알람                                                                                                                           |
+| ------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------- |
+| <img src="https://raw.githubusercontent.com/lucykim05/image/main/rock_FE/KakaoTalk_20251117_163654672.gif" width="500"/> | <img src="https://raw.githubusercontent.com/lucykim05/image/main/rock_FE/attendance_alarm.png" alt="attendance alarm" width="500"/> |
 
 ### 음성 채널 입퇴장
 

@@ -35,6 +35,6 @@ export function getYesterdayKST() {
 export function isMorningTime() {
   const koreaTime = getKoreanTime();
   const hour = koreaTime.getHours();
-  return hour >= 6 && hour < 9;
+  return hour >= 6 && hour < 17;
   //boolean으로
 }
