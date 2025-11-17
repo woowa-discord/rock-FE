@@ -5,29 +5,19 @@ export default {
   data: new SlashCommandBuilder()
     .setName("공부시간")
     .setDescription("측정한 공부시간을 확인할 수 있는 명령어")
-    .addSubcommand((subcommand) =>
-      subcommand
-        .setName("-하루")
-        .setDescription("오늘의 공부시간을 확인합니다.")
-    )
-    .addSubcommand((subcommand) =>
-      subcommand
-        .setName("-일주일")
-        .setDescription("일주일 동안의 공부시간을 확인합니다.")
-    )
-    .addSubcommand((subcommand) =>
-      subcommand
-        .setName("-한달")
-        .setDescription("한 달 간의 공부시간을 확인합니다.")
+    .addStringOption((option) =>
+      option
+        .setName("기간")
+        .setDescription("조회할 기간을 선택하세요.")
+        .setRequired(true) //필수인지
+        .addChoices(
+          { name: "하루", value: "day" },
+          { name: "일주일", value: "week" },
+          { name: "한달", value: "week" }
+        )
     ),
   async execute(interaction) {
-    const subCommand = interaction.options.getSubcommand();
-    if (subCommand === "-하루") {
-      await getStudyTime(interaction, "day");
-    } else if (subCommand === "-일주일") {
-      await getStudyTime(interaction, "week");
-    } else if (subCommand === "-한달") {
-      await getStudyTime(interaction, "month");
-    }
+    const value = interaction.options.getString("기간");
+    await getStudyTime(interaction, value);
   },
 };

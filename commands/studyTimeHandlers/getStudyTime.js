@@ -4,17 +4,17 @@ import { getKoreanTime, formatKSTDate } from "../../utils/time.js";
 import { formatStudyTime } from "../../utils/time.js";
 import { STUDYTIME } from "../../constants/messages.js";
 
-export const getStudyTime = async (interaction, range) => {
+export const getStudyTime = async (interaction, value) => {
   const userDisplayName = interaction.member.displayName;
   const todayDate = formatKSTDate(getKoreanTime()); //yyyy-mm-dd 문자열 형식
   let response = "";
 
   try {
-    if (range === "day") {
+    if (value === "day") {
       response = await dailyStudyTimeMsg(todayDate, userDisplayName);
-    } else if (range === "week") {
+    } else if (value === "week") {
       response = await weeklyStudyTimeMsg(todayDate, userDisplayName);
-    } else if (range === "month") {
+    } else if (value === "month") {
       const monthPattern = `${todayDate.substring(0, 7)}%`;
       response = await monthlyStudyTimeMsg(monthPattern, userDisplayName);
     }
