@@ -1,4 +1,4 @@
-# rock-FE
+<img src="https://raw.githubusercontent.com/lucykim05/image/main/rock_FE/rock_logo.png"/>
 
 우아한 테크 코스 4주차 &amp; 5주차 오픈 미션
 
@@ -10,6 +10,8 @@
 4. [**프로젝트 문서**](#4)
 5. [**주요 기능**](#5)
 
+<br />
+
 <div id='1'></div>
 
 ## 프로젝트 개요
@@ -17,18 +19,22 @@
 - 진행 기간 : 2025.11.4 ~ 2025.11.25
 - DiscordJS 기반 스터디 헬퍼 봇
 
+<br />
+
 ## 주제 선정 이유
 
 - 디스코드로 스터디를 진행하는데 있어 도움을 줄 수 있는 헬퍼 봇을 만들고자 하였습니다.
 - 우리가 원하는 기능을 제공하는 봇이었으면 좋겠다는 생각에 직접 구현해보게 되었습니다.
 - 블라
 
+<br />
+
 ## 프로그램 실행 방법
 
 ### 기초 패키지 설정
 
 1. 로컬에 `clone repository` 진행
-2. 터미널에 `npm install discord.js`입력하여 discord.js 받기
+2. 터미널에 `npm install`입력하여 라이브러리 적용
 3. `config.json` 파일 생성 후 아래처럼 bot token 입력하기 (token이 필요한 경우 개발자에게 문의)
 
 ```
