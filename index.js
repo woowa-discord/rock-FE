@@ -11,7 +11,6 @@ import {
   Collection,
 } from 'discord.js';
 
-import { scheduleManager } from './events/alarm/schedule.js';
 
 
 const token = process.env.DISCORD_TOKEN;
@@ -101,12 +100,6 @@ for (const file of eventFiles) {
     client.on(event.name, (...args) => event.execute(...args));
   }
 }
-
-// 봇 로그인 후 예약된 메세지(스케쥴) 로드
-client.once('clientReady', async () => {
-  console.log(`봇이 준비되었습니다: ${client.user.tag}`);
-  await scheduleManager.loadSchedules(guildId);
-});
 
 // 클라이언트 토큰을 갖고 봇 로그인
 client.login(token);

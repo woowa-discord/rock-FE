@@ -9,7 +9,17 @@ import {
 import { ATTENDANCE_QUERIES } from '../../db/queries/attendance.js';
 import pool from '../../db/database.js';
 
-export async function processAttendance(userId, username) {
+
+export async function processAttendance(userId, guildId, username) {
+  // 유저 등록
+  await pool.query(ATTENDANCE_QUERIES.REGISTER_USER, [
+    userId,
+    guildId,
+    username,
+  ]);
+
+  // 시간 정보
+
   const koreanTime = getKoreanTime();
   const today = formatKSTDate(koreanTime);
   const currentTime = formatKSTTime(koreanTime);
@@ -19,6 +29,7 @@ export async function processAttendance(userId, username) {
   // 출석 등록
   const result = await pool.query(ATTENDANCE_QUERIES.REGISTER_ATTENDANCE, [
     userId,
+    guildId,
     today,
     currentTime,
     isMorning,
