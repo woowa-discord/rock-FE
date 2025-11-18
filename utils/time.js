@@ -35,6 +35,15 @@ export function getYesterdayKST() {
 export function isMorningTime() {
   const koreaTime = getKoreanTime();
   const hour = koreaTime.getHours();
-  return hour >= 6 && hour < 17;
+  return hour >= 6 && hour < 9;
   //boolean으로
 }
+
+//초단위로 측정된 시간을 시분초 단위로 변환
+import { UNIT } from '../constants/units.js';
+export const formatStudyTime = (time) => {
+  const hours = Math.floor(time / UNIT.SEC2HOUR);
+  const minutes = Math.floor((time % UNIT.SEC2HOUR) / UNIT.SEC2MINUTE);
+  const seconds = time % UNIT.SEC2MINUTE;
+  return `${hours}시간 ${minutes}분 ${seconds}초`;
+};

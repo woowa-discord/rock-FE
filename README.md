@@ -70,13 +70,14 @@
         <tr>
             <td align = 'center' valign = 'top'>
                 - 프로젝트 세팅<br />
-                - 공부 시간 기록<br />
-                - 귀요미
+                - 공부 시간 기록 구현<br />
+                - 로고 & 봇 디자인
             </td>
             <td align = 'center' valign = 'top'>
                 - DB 세팅<br />
-                - 출석<br />
-                - 뭘까나
+                - 노션 세팅<br />
+                - 출석 기능 구현<br />
+                - 봇 배포
             </td>
         </tr>
     </table>
