@@ -7,7 +7,6 @@ export async function checkAttendance(interaction) {
   const username = interaction.member.displayName;
 
   try {
-
     await interaction.deferReply();
 
     const result = await processAttendance(userId, guildId, username);

@@ -32,6 +32,14 @@ export default {
             .setMinValue(0)
             .setMaxValue(23)
         )
+        .addIntegerOption((option) =>
+          option
+            .setName('분')
+            .setDescription('출석 버튼이 뜰 시간의 분 단위 (0-59)')
+            .setRequired(true)
+            .setMinValue(0)
+            .setMaxValue(59)
+        )
     )
     .addSubcommand((subcommand) =>
       subcommand
