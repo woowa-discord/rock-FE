@@ -76,7 +76,7 @@
             <td align = 'center' valign = 'top'>
                 - DB 세팅<br />
                 - 노션 세팅<br />
-                - 출석 기능 구현<br />
+                - 출석 및 봇 세팅 기능 구현<br />
                 - 봇 배포
             </td>
         </tr>
@@ -98,12 +98,15 @@
 ![discord.js](https://img.shields.io/badge/discord.js-5865F2?logo=discord&logoColor=fff&style=for-the-badge)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?logo=postgresql&logoColor=fff&style=for-the-badge)
 ![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?logo=supabase&logoColor=000&style=for-the-badge)
+![node-schedule](https://img.shields.io/badge/node--schedule-FF4136?logo=node.js&logoColor=fff&style=for-the-badge)
+
+
 
 ### 배포 & 협업
 
-![Railway](https://img.shields.io/badge/Railway-0B0D0E?logo=railway&logoColor=fff&style=for-the-badge)
+![Koyeb](https://img.shields.io/badge/Koyeb-6534FF?logo=koyeb&logoColor=fff&style=for-the-badge)
 ![Git](https://img.shields.io/badge/Git-F05032?logo=git&logoColor=fff&style=for-the-badge)
-![Notion](https://img.shields.io/badge/Notion-000000?logo=notion&logoColor=fff&style=for-the-badge)
+![Notion](https://img.shields.io/badge/Notion-28A745?logo=notion&logoColor=fff&style=for-the-badge)
 
 <br />
 
