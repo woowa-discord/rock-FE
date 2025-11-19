@@ -1,26 +1,32 @@
 import { CHANNEL } from "../../constants/messages.js";
-import { sendMessage } from "./messageManager.js";
+import { sendMessage2Channel, sendDM } from "./messageManager.js";
 import { formatKSTDate } from "../../utils/time.js";
-import { saveStartTime } from "./DBManager.js";
+import { DBsaveStartTime, DBsaveEndTime } from "./DBManager.js";
 
-export const checkStudy = (newState, studyChannelId) => {
+export const checkStudy = async (newState, studyChannelId) => {
   const curChannelId = newState.channelId;
   const userDisplayName = newState.member.user.displayName;
   if (curChannelId === studyChannelId) {
     //입장
-    startTimer(newState);
+    await startTimer(newState);
     const msg = userDisplayName + CHANNEL.ENTER_MSG;
-    sendMessage(newState, msg, studyChannelId);
+    sendMessage2Channel(newState, msg, studyChannelId);
   } else {
     //퇴장
-    endTimer();
+    await endTimer(newState);
     const msg = userDisplayName + CHANNEL.EXIT_MSG;
-    sendMessage(newState, msg, studyChannelId);
+    sendMessage2Channel(newState, msg, studyChannelId);
   }
 };
 
 const startTimer = async (newState) => {
   const startTime = new Date();
   const date = formatKSTDate(new Date());
-  saveStartTime(newState, startTime, date);
+  await DBsaveStartTime(newState, startTime, date);
+};
+
+const endTimer = async (newState) => {
+  const endTime = new Date();
+  const date = formatKSTDate(new Date());
+  await DBsaveEndTime(newState, endTime, date);
 };

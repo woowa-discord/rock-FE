@@ -16,7 +16,7 @@ export default {
         oldState.channelId === studyChannelId ||
         newState.channelId === studyChannelId
       ) {
-        checkStudy(newState, studyChannelId); //현재 사용자의 입/퇴장 상태에 따라 공부시간 측정/종료
+        await checkStudy(newState, studyChannelId); //현재 사용자의 입/퇴장 상태에 따라 공부시간 측정/종료
       }
     } catch (error) {
       if (error instanceof StudyTimeCountError) {
