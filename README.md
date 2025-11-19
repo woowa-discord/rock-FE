@@ -13,14 +13,13 @@
 
 <br />
 
+
 <div id='1'></div>
 
 ## 프로젝트 개요
 
 - 진행 기간 : 2025.11.4 ~ 2025.11.25
 - DiscordJS 기반 스터디 헬퍼 봇
-
-<br />
 
 ## 주제 선정 이유
 
@@ -99,15 +98,14 @@
 ![discord.js](https://img.shields.io/badge/discord.js-5865F2?logo=discord&logoColor=fff&style=for-the-badge)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?logo=postgresql&logoColor=fff&style=for-the-badge)
 ![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?logo=supabase&logoColor=000&style=for-the-badge)
-![node-schedule](https://img.shields.io/badge/node--schedule-FF4136?logo=node.js&logoColor=fff&style=for-the-badge)
-
-
 
 ### 배포 & 협업
 
-![Koyeb](https://img.shields.io/badge/Koyeb-6534FF?logo=koyeb&logoColor=fff&style=for-the-badge)
+![Railway](https://img.shields.io/badge/Railway-0B0D0E?logo=railway&logoColor=fff&style=for-the-badge)
 ![Git](https://img.shields.io/badge/Git-F05032?logo=git&logoColor=fff&style=for-the-badge)
-![Notion](https://img.shields.io/badge/Notion-28A745?logo=notion&logoColor=fff&style=for-the-badge)
+![Notion](https://img.shields.io/badge/Notion-000000?logo=notion&logoColor=fff&style=for-the-badge)
+![node-schedule](https://img.shields.io/badge/node--schedule-FF4136?logo=node.js&logoColor=fff&style=for-the-badge)
+
 
 <br />
 
@@ -124,6 +122,7 @@
         </td>
         <td align = 'center' width = '200'>
             <a href = 'https://ancient-shrine-3f1.notion.site/Main-Page-2ae151b029cd80439f2fc27619e4f1f3?pvs=74' target = 'blank'>
+
                 <img src = "https://upload.wikimedia.org/wikipedia/commons/e/e9/Notion-logo.svg" width = '80' height = '80' alt = 'notion'/>
             </a>
         </td>
