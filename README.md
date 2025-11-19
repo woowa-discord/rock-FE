@@ -118,7 +118,7 @@
     <tr>
         <td align = 'center' width = '200'>
             <a href = 'https://github.com/woowa-discord/rock-FE' target = 'blank'>
-                <img src = "https://cdn-icons-png.flaticon.com/512/25/25231.png" width = '80' height = '80' alt = 'repo'/>
+                <img src = "https://img.icons8.com/ios11/512/FFFFFF/github.png" width = '80' height = '80' alt = 'repo'/>
             </a>
         </td>
         <td align = 'center' width = '200'>
