@@ -1,3 +1,5 @@
+//개인 통계 카드
+
 import { StatCard } from './StatCard';
 
 export function PersonalStatsCard({ attendanceCount, streakDays, studyTotal }) {

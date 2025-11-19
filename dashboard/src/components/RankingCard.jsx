@@ -1,6 +1,8 @@
+// 공부시간 순위 카드
+
 import { StatCard } from './StatCard';
 
-export function GlobalRankingCard({ ranking }) {
+export function RankingCard({ ranking }) {
   return (
     <StatCard title="공부시간 순위">
       <ul>
