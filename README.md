@@ -200,7 +200,7 @@
 <details>
     <summary><strong>출석</strong></summary>
     <br />
-    <img width="800" height="1060" alt="공부시간측정_다이어그램" src="https://github.com/user-attachments/assets/42086f9a-7e16-4b89-8219-d9b807a6c45c" />
+    <img width="800" alt="출_다이어그램" src="https://raw.githubusercontent.com/lucykim05/image/main/rock_FE/Untitled diagram-2025-11-18-074844.png" />
     
 </details>
 
