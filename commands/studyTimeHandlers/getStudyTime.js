@@ -3,6 +3,8 @@ import { STUDY_TIME_QUERIES } from "../../db/queries/studyTimeQueries.js";
 import { getKoreanTime, formatKSTDate } from "../../utils/time.js";
 import { formatStudyTime } from "../../utils/time.js";
 import { STUDYTIME } from "../../constants/messages.js";
+import { GetStudyTimeError } from "../../error/Errors.js";
+import { ERROR_MESSAGES } from "../../constants/errorMessages.js";
 
 export const getStudyTime = async (interaction, value) => {
   const userDisplayName = interaction.member.displayName;
@@ -36,7 +38,13 @@ export const getStudyTime = async (interaction, value) => {
       );
     }
   } catch (error) {
-    response = STUDYTIME.ERROR_FETCH_DB_DATA;
+    if (error instanceof GetStudyTimeError) {
+      response = ERROR_MESSAGES.ERROR_NO_STUDY_TIME;
+      console.log(`[StudyTime Info] ${userDisplayName} : 공부시간 없음.`);
+    } else {
+      response = STUDYTIME.ERROR_FETCH_DB_DATA;
+      console.error(`[DB Error] ${error.name}: ${error.message}`);
+    }
   } finally {
     await interaction.reply(response);
   }
@@ -47,6 +55,9 @@ const dailyStudyTimeMsg = async (date, userId, guildId, userDisplayName) => {
     STUDY_TIME_QUERIES.FETCH_DAILY_STUDY_TIME,
     [userId, guildId, date]
   );
+  if (dailyStudyTime === 0)
+    throw new GetStudyTimeError(ERROR_MESSAGES.ERROR_NO_STUDY_TIME);
+
   const formattedStudyTime = formatStudyTime(dailyStudyTime);
   return `[${userDisplayName}] 마님의 오늘(${date}) 공부시간은 ${formattedStudyTime} 여유!`;
 };
@@ -62,6 +73,8 @@ const weeklyStudyTimeMsg = async (date, userId, guildId, userDisplayName) => {
     STUDY_TIME_QUERIES.FETCH_WEEKLY_STUDY_TIME,
     [userId, guildId, weekStartDate, weekEndDate]
   );
+  if (weeklyStudyTime === 0)
+    throw new GetStudyTimeError(ERROR_MESSAGES.ERROR_NO_STUDY_TIME);
 
   const formattedStudyTime = formatStudyTime(weeklyStudyTime);
 
@@ -78,6 +91,9 @@ const monthlyStudyTimeMsg = async (
     STUDY_TIME_QUERIES.FETCH_MONTHLY_STUDY_TIME,
     [userId, guildId, datePattern]
   );
+  if (monthlyStudyTime === 0)
+    throw new GetStudyTimeError(ERROR_MESSAGES.ERROR_NO_STUDY_TIME);
+
   const formattedStudyTime = formatStudyTime(monthlyStudyTime);
 
   const dateOnlyMonth = datePattern.substring(5, 7);
@@ -86,8 +102,7 @@ const monthlyStudyTimeMsg = async (
 
 const getStudyTimeFromDB = async (query, dateArray) => {
   const queryResult = await pool.query(query, dateArray);
-  const totalStudyTime = queryResult.rows[0].total_study_time;
-  return totalStudyTime;
+  return queryResult.rows[0]?.total_study_time ?? 0;
 };
 
 const getWeekStart = (date) => {
