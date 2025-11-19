@@ -2,8 +2,8 @@
 
 export const ATTENDANCE_QUERIES = {
   // 사용자 등록
-  REGISTER_USER: `INSERT INTO users (user_id, username)
-  VALUES ($1, $2)
+  REGISTER_USER: `INSERT INTO users (user_id, guild_id, username)
+  VALUES ($1, $2, $3)
   ON CONFLICT (user_id) DO NOTHING -- 기존 유저면 아무것도 안해도 됨`,
 
   // 출석 등록
