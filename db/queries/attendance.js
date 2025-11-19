@@ -51,4 +51,8 @@ export const ATTENDANCE_QUERIES = {
   ORDER BY s.total_attendance DESC
   LIMIT 5
   `,
+
+  GET_CHANNEL: `SELECT attendance_channel_id
+  FROM settings
+  WHERE guild_id = $1`,
 };

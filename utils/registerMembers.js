@@ -12,6 +12,7 @@ export async function registerMembers(client) {
     for (const [id, member] of members) {
       await pool.query(ATTENDANCE_QUERIES.REGISTER_USER, [
         member.id,
+        guildId,
         member.displayName,
         // 닉네임 등록
       ]);
