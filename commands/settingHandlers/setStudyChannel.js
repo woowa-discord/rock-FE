@@ -23,9 +23,10 @@ export async function setStudyChannel(interaction) {
       ]);
     }
 
-    await interaction.reply(`출석 채널이 ${channel}으로 설정되었습니다.`);
+    await interaction.reply(`공부 음성 채널이 ${channel}으로 설정되었습니다.`);
   } catch (error) {
     console.error('setStudyChannel 에러', error);
     await interaction.reply('음성채널 설정 오류');
   }
 }
+
