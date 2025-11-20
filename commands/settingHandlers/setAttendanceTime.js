@@ -29,7 +29,7 @@ export async function setAttendanceTime(interaction) {
     console.log('출석 설정 변경');
 
     return interaction.reply(
-      `출석 시간이 ${hour}시 ${minute}분으로 설정되었습니다.`
+      `출석 시간이 ${kstHour}시 ${kstMinute}분으로 설정되었습니다.`
     );
   } catch (error) {
     console.error(error);
