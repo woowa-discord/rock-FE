@@ -25,6 +25,12 @@ export default {
 
     const result = await pool.query(ATTENDANCE_QUERIES.GET_CHANNEL, [guildId]);
 
+    // 출석 채널이 설정되지 않았을 때
+    if(!result.rows[0] || !result.rows[0].attendance_channel_id) {
+      await interaction.reply('출석 채널이 설정되지 않았습니다. 관리자에게 문의해주세요.');
+      return;
+    }
+    
     const attendanceChannelId = result.rows[0].attendance_channel_id;
 
     if (interaction.channelId !== attendanceChannelId) {
@@ -43,3 +49,4 @@ export default {
     }
   },
 };
+
