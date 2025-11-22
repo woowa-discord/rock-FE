@@ -25,6 +25,7 @@ export default function App() {
   const handleDiscordLogout= () => {
     setLoginState(false);
     localStorage.removeItem('discord_access_token');
+    alert('로그아웃 했습니다!')
     console.log("로그아웃");
   }
 
