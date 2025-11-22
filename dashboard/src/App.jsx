@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import './components/calendar.css';
 import Header from './components/Header';
-import { DISCORD_LOGIN_URL } from './constants/constant.js';
+import { DISCORD_LOGIN_URL_DEPLOY,DISCORD_LOGIN_URL_LOCAL } from './constants/constant.js';
 import { code2AccessToken } from './api/accessToken.js';
 import Dashboard from './components/Dashboard.jsx';
 
@@ -15,7 +15,7 @@ export default function App() {
   //로그인 버튼 클릭 시 디스코드 로그인하는 화면으로 이동
   const handleDiscordLogin = () =>{
     console.log('디스코드 로그인 실행')
-    window.location.href = DISCORD_LOGIN_URL; 
+    window.location.href = DISCORD_LOGIN_URL_LOCAL; 
   }
   
   //로그아웃 버튼 클릭시 logainState false 및 localStorage에 저장된 access_token 삭제
