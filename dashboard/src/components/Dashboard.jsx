@@ -47,7 +47,7 @@ import { getUserInfo } from '../api/user.js';
           </div>
 
           {/* dashboard 내용 */}
-          { selectedGuild && <DashboardContent userDisplayName = { userDisplayName } userId = { userId } selectedGuild ={ selectedGuild } />}
+          { selectedGuild && <DashboardContent userId = { userId } selectedGuild ={ selectedGuild } />}
         </main>
       )
   }

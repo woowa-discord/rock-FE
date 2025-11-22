@@ -2,7 +2,7 @@
   import { PersonalStatsCard } from './PersonalStatsCard.jsx';
   import { RankingCard } from './RankingCard.jsx';
 
-export default function DashboardContent({userDisplayName, userId, selectedGuild}){
+export default function DashboardContent({ userId, selectedGuild}){
     // mock 데이터
     const personalStats = { attendanceCount: 3, streakDays: 2, studyTotal: 45 };
     const rankingData = [
