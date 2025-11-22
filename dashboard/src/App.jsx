@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import './components/calendar.css';
 import Header from './components/Header';
 import { DISCORD_LOGIN_URL } from './constants/constant.js';
-import { code2AccessToken } from './login/loginFunctions.js';
+import { code2AccessToken } from './api/accessToken.js';
 import Dashboard from './components/Dashboard.jsx';
 
 export default function App() {

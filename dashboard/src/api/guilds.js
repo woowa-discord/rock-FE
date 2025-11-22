@@ -12,8 +12,10 @@ export const getGuildInfo = async (hasFetchedGuild) => {
 
     if (error) throw Error(error);
 
-    console.log("서버 목록 : ", data);
+    console.log("서버 데이터 가져오기 성공!");
+    return data;
   } catch (error) {
     console.log("데이터 가져오기 실패 : ", error);
+    return;
   }
 };

@@ -1,40 +1,51 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
+import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 
-//CORS 헤더 설정
 const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-}
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Headers":
+    "authorization, x-client-info, apikey, content-type",
+};
 
 serve(async (req) => {
-  // Preflight(OPTIONS) 요청 처리 
-  // 브라우저가 요청하면 보내라고 200 OK를 전송
-  if (req.method === 'OPTIONS') {
-    return new Response('ok', { headers: corsHeaders })
+  if (req.method === "OPTIONS") {
+    return new Response("ok", { headers: corsHeaders });
   }
 
   try {
-    // React에서 보낸 accessToken 받기
-    const { accessToken } = await req.json()
-    
-    // 디스코드 API 호출
-    const response = await fetch('https://discord.com/api/users/@me/guilds', {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    })
-    
-    const data = await response.json()
-    if (!response.ok) throw data
+    // 유저 토큰
+    const { accessToken } = await req.json();
 
-    return new Response(JSON.stringify(data), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    })
+    // supabase에 저장된 봇 토큰
+    const botToken = Deno.env.get("DISCORD_BOT_TOKEN");
 
+    // 유저의 서버 목록 가져오기
+    const userRes = await fetch("https://discord.com/api/users/@me/guilds", {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    });
+    if (!userRes.ok) throw await userRes.json();
+    const userGuilds = await userRes.json();
+
+    // 봇의 서버 목록 가져오기
+    const botRes = await fetch("https://discord.com/api/users/@me/guilds", {
+      headers: { Authorization: `Bot ${botToken}` },
+    });
+    if (!botRes.ok) throw await botRes.json();
+    const botGuilds = await botRes.json();
+
+    // 봇이 있는 서버들의 ID만 따로 모아서 집합으로 생성
+    const botGuildIds = new Set(botGuilds.map((g: any) => g.id));
+
+    // 유저 서버 중에서 봇 있는 곳만 남김
+    const commonGuilds = userGuilds.filter((guild: any) => botGuildIds.has(guild.id));
+
+    return new Response(JSON.stringify(commonGuilds), {
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+    });
   } catch (error) {
+    console.error(error);
     return new Response(JSON.stringify({ error: error.message || error }), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
       status: 400,
-    })
+    });
   }
-})
+});
