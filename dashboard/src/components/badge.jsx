@@ -10,7 +10,7 @@ export default function Badge({ text, color, backgroundColor }) {
         backgroundColor: backgroundColor || '#002480ac',
         color: color || '#fff ',
         borderRadius: '12px',
-        padding: '3px 40%',
+        padding: '3px 35%',
         fontSize: '0.8em',
         fontWeight:"bold",
         marginTop: '60%',
