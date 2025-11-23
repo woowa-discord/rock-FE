@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import AttendanceCalendar from './AttendanceCalendar.jsx';
 import { PersonalStatsCard } from './PersonalStatsCard.jsx';
 import { RankingCard } from './RankingCard.jsx';
-import { getTotalStudyTime } from '../database/totalStudyTime.js';
+import { getTotalStudyTime } from '../database/studyTime.js';
 
 export default function DashboardContent({ userId, selectedGuild}){
     // mock 데이터
