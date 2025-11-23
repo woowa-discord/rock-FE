@@ -3,8 +3,8 @@
  * 시간 변환 -> 출력
  */
 
-import { supabase } from './supabaseClient';
-import { getWeekStart, getWeekEnd } from '../utils/weekDate.js';
+import { supabase } from "./supabaseClient";
+import { getWeekStart, getWeekEnd } from "../utils/weekDate.js";
 
 export const getWeeklyStudyRanking = async (selectedGuild) => {
   const weekStart = getWeekStart(new Date()).toISOString();
@@ -12,12 +12,13 @@ export const getWeeklyStudyRanking = async (selectedGuild) => {
 
   try {
     const { data, error } = await supabase
-      .from('session')
+      .from("session")
       .select(`user_id, user:user_id(username), study_time`)
-      .eq('guild_id', selectedGuild.id)
-      .gte('start_time', weekStart)
-      .lte('end_time', weekEnd);
+      .eq("guild_id", selectedGuild.id)
+      .gte("start_time", weekStart)
+      .lte("end_time", weekEnd);
 
+    if (error) throw Error(error);
     if (!data) return [];
 
     // 유저별 합산
@@ -45,8 +46,30 @@ export const getWeeklyStudyRanking = async (selectedGuild) => {
 };
 
 // 초 -> 시, 분으로 변환(rock-FE의 time.js 역할)
-const formatStudyTime = (seconds) => {
+export const formatStudyTime = (seconds) => {
   const hours = Math.floor(seconds / 3600);
   const minutes = Math.floor((seconds % 3600) / 60);
   return `${hours}시간 ${minutes}분`;
+};
+
+export const formatDate = (date) => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+};
+
+export const getStudyTimes = async (guildId, userId) => {
+  try {
+    const { data, error } = await supabase
+      .from("session")
+      .select("*")
+      .eq("guild_id", guildId)
+      .eq("user_id", userId);
+
+    if (error) throw Error(error);
+    if (data) return data;
+  } catch (error) {
+    console.error(error);
+  }
 };
