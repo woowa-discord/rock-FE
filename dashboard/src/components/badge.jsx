@@ -7,10 +7,10 @@ export default function Badge({ text, color, backgroundColor }) {
   return (
     <div
       style={{
-        backgroundColor: backgroundColor || '#f93a3aff',
-        color: color || '#fff',
+        backgroundColor: backgroundColor || '#002480ac',
+        color: color || '#fff ',
         borderRadius: '12px',
-        padding: '3px 35%',
+        padding: '3px 40%',
         fontSize: '0.8em',
         fontWeight:"bold",
         marginTop: '60%',
