@@ -3,7 +3,7 @@ import fetch from 'node-fetch';
 
 export default {
   data: new SlashCommandBuilder()
-    .setName('백준추천')
+    .setName('백준문제추천')
     .setDescription('백준 문제를 추천합니다.')
     .addStringOption((option) =>
       option
