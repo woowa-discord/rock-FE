@@ -1,12 +1,11 @@
 import { useEffect, useRef } from 'react';
 import AttendanceCalendar from './AttendanceCalendar.jsx';
-import { PersonalStatsCard } from './PersonalStatsCard.jsx';
+import { AttendanceCard } from './AttendanceCard.jsx';
 import { RankingCard } from './RankingCard.jsx';
 import { getWeeklyStudyTime } from '../database/studyTime.js';
 
 export default function DashboardContent({ userId, selectedGuild}){
     // mock 데이터
-    const personalStats = { attendanceCount: 3, streakDays: 2, studyTotal: 45 };
     const rankingData = [
         { username: '여빈', hours: 45 },
         { username: '희주', hours: 38 },
@@ -29,7 +28,7 @@ export default function DashboardContent({ userId, selectedGuild}){
         <>
             <AttendanceCalendar guildId={selectedGuild.id} userId={userId} />
             <div className="flex justify-center gap-12 flex-wrap text-black mt-6">
-                <PersonalStatsCard {...personalStats} />
+                <AttendanceCard userId = { userId } selectedGuild = { selectedGuild } />
                 <RankingCard ranking={rankingData} />
             </div>
         </>
