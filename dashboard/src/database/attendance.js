@@ -28,3 +28,26 @@ export const getWeeklyAttendance = async (
   }
   return false;
 };
+
+export const getAttendanceDate = async (guildId, userId) => {
+  try {
+    const { data, error } = await supabase
+      .from("attendance")
+      .select("attendance_date")
+      .eq("guild_id", guildId)
+      .eq("user_id", userId);
+
+    if (error) throw Error(error);
+    if (data) {
+      const dates = data.map((row) => {
+        const date = new Date(row.attendance_date);
+        date.setDate(date.getDate()); // 하루 빼기(시간대 문제)
+        return date.toISOString().split("T")[0];
+      });
+
+      return dates;
+    }
+  } catch (error) {
+    console.error("출석 데이터 오류", error);
+  }
+};

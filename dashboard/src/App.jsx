@@ -1,22 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
 import './components/calendar.css';
 import Header from './components/Header';
-import { DISCORD_LOGIN_URL_DEPLOY,DISCORD_LOGIN_URL_LOCAL } from './constants/constant.js';
 import { code2AccessToken } from './api/accessToken.js';
 import Dashboard from './components/Dashboard.jsx';
-
+import LandingPage from './components/LandingPage.jsx';
 export default function App() {
 
 
   //localStorage에 access token 여부로 로그인 여부 확인
   const [loginState, setLoginState] = useState(() => !!localStorage.getItem('discord_access_token'));
   const [isMainVisible, setIsMainVisible] = useState(loginState);
- 
-  //로그인 버튼 클릭 시 디스코드 로그인하는 화면으로 이동
-  const handleDiscordLogin = () =>{
-    console.log('디스코드 로그인 실행')
-    window.location.href = DISCORD_LOGIN_URL_LOCAL; 
-  }
   
   //로그아웃 버튼 클릭시 logainState false 및 localStorage에 저장된 access_token 삭제
   const handleDiscordLogout= () => {
@@ -46,9 +39,10 @@ export default function App() {
 
 return (
     <>
-      <Header isLoggedIn={loginState} onLogin={handleDiscordLogin} onLogout={handleDiscordLogout} />
+      <Header isLoggedIn={loginState} onLogout={handleDiscordLogout} />
 
-      { isMainVisible && <Dashboard/> }
+     { isMainVisible 
+     ? <Dashboard /> : <LandingPage/> }
     </>
   );
 }
