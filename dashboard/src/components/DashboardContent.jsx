@@ -1,6 +1,8 @@
-  import AttendanceCalendar from './AttendanceCalendar.jsx';
-  import { PersonalStatsCard } from './PersonalStatsCard.jsx';
-  import { RankingCard } from './RankingCard.jsx';
+import { useEffect, useRef } from 'react';
+import AttendanceCalendar from './AttendanceCalendar.jsx';
+import { PersonalStatsCard } from './PersonalStatsCard.jsx';
+import { RankingCard } from './RankingCard.jsx';
+import { getTotalStudyTime } from '../database/totalStudyTime.js';
 
 export default function DashboardContent({ userId, selectedGuild}){
     // mock 데이터
@@ -11,6 +13,16 @@ export default function DashboardContent({ userId, selectedGuild}){
         { username: '돌쇠', hours: 32 },
         { username: '이슬', hours: 30 },
     ];
+
+    const hasFetchedData = useRef(false);
+    useEffect(()=>{
+    const totalStudyTime = async() => {
+        const studyTimeData = await getTotalStudyTime(hasFetchedData, userId, selectedGuild);
+        if(studyTimeData) console.log('studyTimeData : ', studyTimeData);
+    }
+    
+    totalStudyTime();
+    }, [selectedGuild])
     
     return (
         <>
