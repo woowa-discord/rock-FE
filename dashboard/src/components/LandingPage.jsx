@@ -4,7 +4,7 @@ export default function LandingPage (){
     //로그인 버튼 클릭 시 디스코드 로그인하는 화면으로 이동
     const handleDiscordLogin = () =>{
     console.log('디스코드 로그인 실행')
-    window.location.href = DISCORD_LOGIN_URL_LOCAL; 
+    window.location.href = DISCORD_LOGIN_URL_DEPLOY; 
   }
     return (
         // 랜딩페이지 디자인
