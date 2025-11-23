@@ -10,7 +10,7 @@ export default {
         {
           title: '대시보드 열기',
           description: '위의 링크를 클릭하고, 로그인 해주세요!',
-          url: 'https://example',
+          url: 'https://following-brena-rock-fe-6070e56e.koyeb.app/',
           color: 0x00ff00,
         },
       ],
