@@ -10,7 +10,7 @@ export default {
         {
           title: "대시보드 열기",
           description: "위의 링크를 클릭하고, 로그인 해주세요!",
-          url: "https://balanced-lyndsay-rock-fe-fe9232e1.koyeb.app/",
+          url: "https://rock-fe.vercel.app/",
           color: 0x00ff00,
         },
       ],
