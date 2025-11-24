@@ -140,6 +140,7 @@
 ### 배포 & 협업
 
 ![Koyeb](https://img.shields.io/badge/Koyeb-6E56E0?logo=koyeb&logoColor=fff&style=for-the-badge)
+![Vercel](https://img.shields.io/badge/Vercel-007ACC?logo=vercel&logoColor=fff&style=for-the-badge)
 ![Git](https://img.shields.io/badge/Git-F05032?logo=git&logoColor=fff&style=for-the-badge)
 ![Notion](https://img.shields.io/badge/Notion-3B3B3B?logo=notion&logoColor=fff&style=for-the-badge)
 
@@ -255,7 +256,7 @@
 
 **대시보드 링크**
 <br />
-[대시보드 바로가기](https://balanced-lyndsay-rock-fe-fe9232e1.koyeb.app/)  <!-- 배포 링크 -->
+[대시보드 바로가기](https://rock-fe.vercel.app/)  <!-- 배포 링크 -->
 
 <br />
 
