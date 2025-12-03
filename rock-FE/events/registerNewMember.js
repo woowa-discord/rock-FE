@@ -8,15 +8,16 @@ import { ATTENDANCE_QUERIES } from '../db/queries/attendance.js';
  */
 
 export default {
-  name: 'registerMember',
+  name: 'guildMemberAdd',
   async execute(member) {
     try {
       await pool.query(ATTENDANCE_QUERIES.REGISTER_USER, [
         member.id,
+        member.guild.id,
         member.displayName,
       ]);
     } catch (error) {
-      console.error('멤버 등록 실패');
+      console.error('멤버 등록 실패', error);
     }
   },
 };
